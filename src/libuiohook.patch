@@ -1,3 +1,24 @@
+diff --git a/src/darwin/input_hook.c b/src/darwin/input_hook.c
+index 875deb6..d86e60f 100644
+--- a/src/darwin/input_hook.c
++++ b/src/darwin/input_hook.c
+@@ -986,12 +986,12 @@ CGEventRef hook_event_proc(CGEventTapProxy tap_proxy, CGEventType type, CGEventR
+             // Check for an old OS X bug where the tap seems to timeout for no reason.
+             // See: http://stackoverflow.com/questions/2969110/cgeventtapcreate-breaks-down-mysteriously-with-key-down-events#2971217
+             if (type == (CGEventType) kCGEventTapDisabledByTimeout) {
+-                logger(LOG_LEVEL_WARN, "%s [%u]: CGEventTap timeout!\n",
++                logger(LOG_LEVEL_WARN, "%s [%u]: CGEventTap timeout! Skipping\n",
+                         __FUNCTION__, __LINE__);
+ 
+                 // We need to restart the tap!
+-                restart_tap = true;
+-                CFRunLoopStop(CFRunLoopGetCurrent());
++                // restart_tap = true;
++                // CFRunLoopStop(CFRunLoopGetCurrent());
+             } else {
+                 // In theory this *should* never execute.
+                 logger(LOG_LEVEL_DEBUG, "%s [%u]: Unhandled Darwin event: %#X.\n",
+
 diff --git a/src/windows/input_helper.c b/src/windows/input_helper.c
 index 8242916..0afd395 100644
 --- a/src/windows/input_helper.c
